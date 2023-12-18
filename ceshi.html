@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .shijian{
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <button id="oneCount">获取一次</button>
+  <button id="intervalCount">每十秒自动获取一次</button>
+  <button id="stop">停止</button>
+  <h2>hhhhhh</h2>
+</body>
+<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+<script>
+
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+if (isMobile) {
+  window.oncontextmenu = function () { return false; }
+    window.onkeydown = window.onkeyup = window.onkeypress = function () {
+      window.event.returnValue = false;
+  return false;
+    }
+  var w = window.innerWidth;
+    window.onresize = function () {
+  if (w != window.innerWidth) {
+        window.close();
+        window.location = "about:blank";
+      }
+    }
+} else {
+  window.oncontextmenu = function () { return false; }
+    window.onkeydown = window.onkeyup = window.onkeypress = function () {
+      window.event.returnValue = false;
+  return false;
+    }
+  var h = window.innerHeight, w = window.innerWidth;
+    window.onresize = function () {
+  if (h != window.innerHeight || w != window.innerWidth) {
+        window.close();
+        window.location = "about:blank";
+      }
+    }
+}
+</script>
+<script>
+  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+  axios.defaults.headers.post['Token'] = 'iframe_token:1be84544ede74472ab460de38088cfc4:71a4b57becfe4d2a9528271fd3723469'
+  function getCount() {
+      axios.post('http://api.liveonepick.com/api/c/store-cart/list', {}).then((res)=>{
+      let cartProducts = res.data.resultObject[0].cartProducts
+      $("body").append("<div class='shijian'>时间"+new Date().toLocaleString()+"</div>")
+      cartProducts.forEach((item,index) => {
+        let li = "<div>名字"+item.productName+' 余量'+item.stockNum+' 售出'+(999999-item.stockNum)+"</div>"
+        $("body").append(li)
+      });
+    })
+  }
+  getCount()
+
+  $("#oneCount").click(function () {
+    getCount()
+  })
+  $("#intervalCount").click(function () {
+    var time = setInterval(() => {
+      getCount()
+    }, 10000);
+  })
+  $("#stop").click(function () {
+    clearInterval(time)
+  })
+  
+</script>
+</html>
