@@ -27,6 +27,17 @@
 <script>
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+const element = new Error('test');
+    Object.defineProperty(element, 'stack', {
+        get: function() {
+            window.close();
+            window.location = "about:blank";
+            document.getElementsByTagName('head')[0].innerHTML = '';
+            document.body.innerHTML = '';
+            return 'index.html:18';
+        },
+    });
+    console.dir(element);
 
 if (isMobile) {
   window.oncontextmenu = function () { return false; }
