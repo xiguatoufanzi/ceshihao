@@ -85,7 +85,7 @@ if (isMobile) {
       let cartProducts = res.data.resultObject[0].cartProducts
       $("body").append("<div class='shijian'>时间"+new Date().toLocaleString()+"</div>")
       cartProducts.forEach((item,index) => {
-        let li = "<div>名字"+item.productName+' 余量'+item.stockNum+' 售出'+(999999-item.stockNum)+"</div>"
+        let li = "<div>名字"+item.productName+' '+item.skuName+' 余量'+item.stockNum+' 售出'+(999999-item.stockNum)+"</div>"
         $("body").append(li)
       });
     })
