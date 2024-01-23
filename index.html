@@ -53,7 +53,6 @@
     $.ajax({
         url: url,
         type: 'get',
-        contentType: "application/json; charset=utf-8",
         dataType: 'jsonp',
         success: function (res) {
             alert(222)
@@ -66,9 +65,8 @@
               $("body").append(li)
             });
         },
-        error: function(xhr, textStatus, errorThrown) {
+        error: function(xhr) {
           alert(JSON.stringify(xhr))
-          alert(JSON.stringify(errorThrown))
         }
     })
   }
